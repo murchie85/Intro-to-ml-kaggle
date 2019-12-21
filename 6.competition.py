@@ -19,11 +19,13 @@ print("Validation MAE for best value of max_leaf_nodes: {:,.0f}".format(val_mae)
 # Code you have previously used to load data
 import pandas as pd
 # FIT MODEL
-from sklearn.tree import DecisionTreeRegressor 
 from sklearn.ensemble import RandomForestRegressor
 # Import the train_test_split function and uncomment
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
+
+
+
 
 #------------------------------------------------------------------------------------------
 # STANDARD PREP APPROACH
@@ -45,35 +47,44 @@ train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
 
 
 
-#------------------------------------------------------------------------------------------
-# BUILD MODEL FOR TRAIN DATA FILE SPLITTING TRAIN/VALIDATE
-#------------------------------------------------------------------------------------------
-
-# RANDOM FOREST
-model = RandomForestRegressor(random_state=1)
-model.fit(train_X, train_y)
-rf_val_predictions = model.predict(val_X)
-rf_val_mae = mean_absolute_error(rf_val_predictions, val_y)
-print("Validation MAE for Random Forest Model: {:,.0f}".format(rf_val_mae))
 
 #------------------------------------------------------------------------------------------
 # TRAIN ON ALL DATA 
 #------------------------------------------------------------------------------------------
 
 # Accuracy should improve if used on all data
-rf_model_on_full_data = RandomForestRegressor()
+rf_model_on_full_data = RandomForestRegressor(n_estimators=100)
 rf_model_on_full_data.fit(X,y) # ALL Data from training CSV
 
 full_train_prediction = rf_model_on_full_data.predict(X)
 full_train_mae = mean_absolute_error(full_train_prediction, y)
-print("Validation MAE for Random Forest Full data Model: {:,.0f}".format(full_train_mae))
+print("ALL DATA MAE: {:,.0f}".format(full_train_mae))
+
+
+
+#------------------------------------------------------------------------------------------
+# BUILD MODEL FOR TRAIN DATA FILE SPLITTING TRAIN/VALIDATE
+#------------------------------------------------------------------------------------------
+
+# RANDOM FOREST
+model = RandomForestRegressor(n_estimators=100, random_state=1)
+model.fit(train_X, train_y)
+rf_val_predictions = model.predict(val_X)
+rf_val_mae = mean_absolute_error(rf_val_predictions, val_y)
+print("VALIDATION TEST MAE: {:,.0f}".format(rf_val_mae))
+
+
+
+
 #------------------------------------------------------------------------------------------
 # PREDICT ON TEST COMPETITION DATA
 #------------------------------------------------------------------------------------------
 test_data_path = 'test.csv'
 test_data = pd.read_csv(test_data_path)
 test_X = test_data[features]
+
 test_prediction = rf_model_on_full_data.predict(test_X)
+print('')
 print('Test csv does not have target sales price to compare MAE or accuracy')
 print('Printing test predicted values')
 print(test_prediction)
@@ -84,11 +95,11 @@ print(test_prediction)
 #------------------------------------------------------------------------------------------
 # SAVE
 #------------------------------------------------------------------------------------------
-
+"""
 print('saving to submission file ')
 
 output = pd.DataFrame({'Id': test_data.Id,
                        'SalePrice': test_prediction})
 output.to_csv('submission.csv', index=False)
-
+"""
 

@@ -15,10 +15,10 @@ home_data.columns
 y = home_data.SalePrice
 
 # SLICE THE HOME DATA INTO TARGETTED COLUMNS ONLY
-feature_names = ['LotArea','YearBuilt','1stFlrSF','2ndFlrSF','FullBath','BedroomAbvGr']
+features = ['LotArea','YearBuilt','1stFlrSF','2ndFlrSF','FullBath','BedroomAbvGr']
 
-# select data corresponding to features in feature_names
-X = home_data[feature_names]
+# select data corresponding to features in features
+X = home_data[features]
 
 model = DecisionTreeRegressor(random_state=1)
 model.fit(X,y)

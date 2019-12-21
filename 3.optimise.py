@@ -28,9 +28,9 @@ home_data.columns
 # set target output
 y = home_data.SalePrice
 # SLICE THE HOME DATA INTO TARGETTED COLUMNS ONLY
-feature_names = ['LotArea','YearBuilt','1stFlrSF','2ndFlrSF','FullBath','BedroomAbvGr']
-# select data corresponding to features in feature_names
-X = home_data[feature_names]
+features = ['LotArea','YearBuilt','1stFlrSF','2ndFlrSF','FullBath','BedroomAbvGr']
+# select data corresponding to features in features
+X = home_data[features]
 # Split into validation and training data
 train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
 

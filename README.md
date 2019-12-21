@@ -1,6 +1,10 @@
-# INTRO TO ML
+# INTRO TO ML & HOUSING PRICE COMPETITION
+
+![HOUSE](https://storage.googleapis.com/kaggle-competitions/kaggle/5407/media/housesbanner.png)
 
 Some starter modules, from the kaggle tutorial on learning ML, this repo is just a collection of the work i have done and summarisation of the litterature. Please use their official site for learning the content [here](https://www.kaggle.com/learn/intro-to-machine-learning).
+
+Additionally this repository includes my submission for the competition on kaggle to guess housing prices, link [here](https://www.kaggle.com/c/home-data-for-ml-course)
 
 # General steps
 

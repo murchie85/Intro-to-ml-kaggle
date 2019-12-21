@@ -16,9 +16,9 @@ home_data.columns
 # set target output
 y = home_data.SalePrice
 # SLICE THE HOME DATA INTO TARGETTED to train COLUMNS ONLY
-feature_names = ['LotArea','YearBuilt','1stFlrSF','2ndFlrSF','FullBath','BedroomAbvGr']
-# select data corresponding to features in feature_names
-X = home_data[feature_names]
+features = ['LotArea','YearBuilt','1stFlrSF','2ndFlrSF','FullBath','BedroomAbvGr']
+# select data corresponding to features in features
+X = home_data[features]
 #  Split is random proportion
 train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
 # SPECIFY MODEL this time with train_X instead of just X
@@ -28,6 +28,10 @@ model.fit(train_X, train_y)
 val_predictions = model.predict(val_X)
 # ACCURACY
 val_mae = mean_absolute_error(val_predictions, val_y)
+
+
+
+
 
 
 

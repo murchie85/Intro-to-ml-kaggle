@@ -12,6 +12,6 @@ Some starter modules, from the kaggle tutorial on learning ML, this repo is just
 6. Fit your model, use training data such as `model.fit(train_X, train_y)`
 7. Create predictions on validation set `val_predictions = model.predict(val_X)`
 8. Predict accuracy on validation set `val_mae = mean_absolute_error(val_predictions, val_y)`
-9. Underfitting/overfitting control
+9. Optimisation Underfitting/overfitting control (build a function to itterate hyperparms and check error)
 
 

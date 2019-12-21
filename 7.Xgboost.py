@@ -1,17 +1,9 @@
 #------------------------------------------------------------------------------------------
 # PROGRAM DESCRIPTION 
-# Random forrest implementation
+# XGBOOST implementation
 # Similar to before, but optimiser has been removed
 # 
 # CODE BELOW SAVED FOR LATER
-"""
-# DECISION TREE - BEST NODE
-iowa_model = DecisionTreeRegressor(max_leaf_nodes=100, random_state=1)
-iowa_model.fit(train_X, train_y)
-val_predictions = iowa_model.predict(val_X)
-val_mae = mean_absolute_error(val_predictions, val_y)
-print("Validation MAE for best value of max_leaf_nodes: {:,.0f}".format(val_mae))
-"""
 #------------------------------------------------------------------------------------------
 
 
@@ -24,6 +16,11 @@ from sklearn.ensemble import RandomForestRegressor
 # Import the train_test_split function and uncomment
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
+
+#xgboost
+from numpy import loadtxt
+from xgboost import XGBClassifier
+from sklearn.metrics import accuracy_score
 
 #------------------------------------------------------------------------------------------
 # STANDARD PREP APPROACH
@@ -40,6 +37,11 @@ y = home_data.SalePrice
 features = ['LotArea','YearBuilt','1stFlrSF','2ndFlrSF','FullBath','BedroomAbvGr']
 # select data corresponding to features in features
 X = home_data[features]
+
+
+seed = 7
+set_test_size = 0.33
+
 # Split into validation and training data
 train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
 
@@ -50,30 +52,34 @@ train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
 #------------------------------------------------------------------------------------------
 
 # RANDOM FOREST
-model = RandomForestRegressor(random_state=1)
+# fit model no training data
+model = XGBClassifier()
 model.fit(train_X, train_y)
-rf_val_predictions = model.predict(val_X)
-rf_val_mae = mean_absolute_error(rf_val_predictions, val_y)
-print("Validation MAE for Random Forest Model: {:,.0f}".format(rf_val_mae))
+
+y_pred = model.predict(val_X)
+val_MAE = mean_absolute_error(y_pred, val_y)
+print("Validation MAE for xgboost Model: {:,.0f}".format(rf_val_mae))
 
 #------------------------------------------------------------------------------------------
 # TRAIN ON ALL DATA 
 #------------------------------------------------------------------------------------------
 
 # Accuracy should improve if used on all data
-rf_model_on_full_data = RandomForestRegressor()
-rf_model_on_full_data.fit(X,y) # ALL Data from training CSV
+model_on_full_data = XGBClassifier()
+model_on_full_data.fit(X,y) # ALL Data from training CSV
 
-full_train_prediction = rf_model_on_full_data.predict(X)
+full_train_prediction = model_on_full_data.predict(X)
 full_train_mae = mean_absolute_error(full_train_prediction, y)
-print("Validation MAE for Random Forest Full data Model: {:,.0f}".format(full_train_mae))
+print("Validation MAE for xgboost Full data Model: {:,.0f}".format(full_train_mae))
+
+
 #------------------------------------------------------------------------------------------
 # PREDICT ON TEST COMPETITION DATA
 #------------------------------------------------------------------------------------------
 test_data_path = 'test.csv'
 test_data = pd.read_csv(test_data_path)
 test_X = test_data[features]
-test_prediction = rf_model_on_full_data.predict(test_X)
+test_prediction = model_on_full_data.predict(test_X)
 print('Test csv does not have target sales price to compare MAE or accuracy')
 print('Printing test predicted values')
 print(test_prediction)

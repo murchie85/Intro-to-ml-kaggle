@@ -1,5 +1,7 @@
 # PIPELINE
 
+Content from [this](https://www.kaggle.com/alexisbcook/pipelines) course 
+
 # Introduction
 
 **Pipelines** are a simple way to keep your data preprocessing and modeling code organized. Specifically, a pipeline bundles preprocessing and modeling steps so you can use the whole bundle as if it were a single step.
@@ -10,3 +12,35 @@ Many data scientists hack together models without pipelines, but pipelines have 
 2. Fewer Bugs: There are fewer opportunities to misapply a step or forget a preprocessing step.
 3. Easier to Productionize: It can be surprisingly hard to transition a model from a prototype to something deployable at scale. We won't go into the many related concerns here, but pipelines can help.
 4. More Options for Model Validation: You will see an example in the next tutorial, which covers cross-validation.
+
+
+
+**Step 1: Define Preprocessing Steps**
+
+Similar to how a pipeline bundles together preprocessing and modeling steps, we use the `ColumnTransformer` class to bundle together different preprocessing steps. The code below:
+
+imputes missing values in **numerical data**, and
+imputes missing values and applies a one-hot encoding to **categorical data**.
+
+```python
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder
+
+# Preprocessing for numerical data
+numerical_transformer = SimpleImputer(strategy='constant')
+
+# Preprocessing for categorical data
+categorical_transformer = Pipeline(steps=[
+    ('imputer', SimpleImputer(strategy='most_frequent')),
+    ('onehot', OneHotEncoder(handle_unknown='ignore'))
+])
+
+# Bundle preprocessing for numerical and categorical data
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numerical_transformer, numerical_cols),
+        ('cat', categorical_transformer, categorical_cols)
+    ])
+```

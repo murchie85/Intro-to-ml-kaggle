@@ -1,4 +1,3 @@
-# NOTE THIS TIME USING ALL NUMERICAL VALUES, ACCURACY SHOULD INCREASE
 #------------------------------------------------------------------------------------------
 # PROGRAM DESCRIPTION 
 #

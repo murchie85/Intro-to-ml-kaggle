@@ -124,6 +124,7 @@ label_X_valid = X_valid.drop(bad_label_cols, axis=1)
 # Apply label encoder
 label_encoder = LabelEncoder()
 
+# Transform each of the xtrain/xvalid columns that match the goodlabels column
 for col in set(good_label_cols):
     label_X_train[col] = label_encoder.fit_transform(X_train[col])
     label_X_valid[col] = label_encoder.transform(X_valid[col])
@@ -170,6 +171,8 @@ print('\nCategorical columns that will be dropped from the dataset:', high_cardi
 OH_encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
 OH_cols_train = pd.DataFrame(OH_encoder.fit_transform(X_train[low_cardinality_cols]))
 OH_cols_valid = pd.DataFrame(OH_encoder.transform(X_valid[low_cardinality_cols]))
+
+
 
 # One-hot encoding removed index; put it back
 OH_cols_train.index = X_train.index

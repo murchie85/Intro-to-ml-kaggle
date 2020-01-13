@@ -95,11 +95,10 @@ print(test_prediction)
 #------------------------------------------------------------------------------------------
 # SAVE
 #------------------------------------------------------------------------------------------
-"""
+
 print('saving to submission file ')
 
 output = pd.DataFrame({'Id': test_data.Id,
                        'SalePrice': test_prediction})
 output.to_csv('submission.csv', index=False)
-"""
 

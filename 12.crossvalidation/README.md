@@ -138,28 +138,6 @@ X_test = test_data[numeric_cols].copy()
 print(X.head())
 
 #------------------------------------------------------------------------------------------
-# PIPELINE
-#------------------------------------------------------------------------------------------
-
-
-my_pipeline = Pipeline(steps=[
-    ('preprocessor', SimpleImputer()),
-    ('model', RandomForestRegressor(n_estimators=50, random_state=0))
-])
-
-#------------------------------------------------------------------------------------------
-# SCORE
-#------------------------------------------------------------------------------------------
-
-# Multiply by -1 since sklearn calculates *negative* MAE
-scores = -1 * cross_val_score(my_pipeline, X, y,
-                              cv=5,
-                              scoring='neg_mean_absolute_error')
-
-print("Average MAE score:", scores.mean())
-
-
-#------------------------------------------------------------------------------------------
 # SCORING FUNCTION (PIPELINE/SCORE INCLUDED)
 #------------------------------------------------------------------------------------------
 

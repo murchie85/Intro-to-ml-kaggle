@@ -17,8 +17,8 @@ from sklearn.model_selection import cross_val_score
 #------------------------------------------------------------------------------------------
 
 # Read the data
-train_data = pd.read_csv('train.csv', index_col='Id')
-test_data = pd.read_csv('test.csv', index_col='Id')
+train_data = pd.read_csv('../train.csv', index_col='Id')
+test_data = pd.read_csv('../test.csv', index_col='Id')
 
 
 # Remove rows with missing target, separate target from predictors
@@ -75,7 +75,7 @@ def get_score(n_estimators):
 # TRY VARIOUS MULTIPLES OF 50
 #------------------------------------------------------------------------------------------
 
-
+# populate dict
 results = {}
 for i in range(1,9):
     results[50*i] = get_score(50*i)
@@ -86,7 +86,6 @@ for i in range(1,9):
 #------------------------------------------------------------------------------------------
 
 import matplotlib.pyplot as plt
-%matplotlib inline
 
 plt.plot(results.keys(), results.values())
 plt.show()
